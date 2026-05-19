@@ -9,7 +9,7 @@ void ADemoPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (ULocalPlayer* LP = GetLocalPlayer())
+	if (auto* LP = GetLocalPlayer())
 	{
 		if (auto* Subsystem = LP->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>())
 		{
