@@ -3,6 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "InputActionValue.h"
+#include "InteractableItem.h"
 #include "GameFramework/Character.h"
 #include "DemoCharacter.generated.h"
 
@@ -19,7 +21,23 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UFUNCTION()
+	void OnInteract(const FInputActionValue& Value);
+	
+	UFUNCTION()
+	void PerformInteractionTrace();
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
+	class UInputAction* InteractionAction;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interaction")
+	float InteractionRange = 500.f;
+	
 public:
+	
+	UPROPERTY(VisibleAnywhere)
+	AInteractableItem* Item;
+	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 

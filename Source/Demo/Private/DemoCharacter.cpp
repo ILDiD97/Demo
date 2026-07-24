@@ -2,6 +2,8 @@
 
 
 #include "DemoCharacter.h"
+#include "EnhancedInputComponent.h"
+#include "EnhancedInputSubsystems.h"
 
 // Sets default values
 ADemoCharacter::ADemoCharacter()
@@ -18,6 +20,37 @@ void ADemoCharacter::BeginPlay()
 	
 }
 
+void ADemoCharacter::OnInteract(const FInputActionValue& Value)
+{
+	PerformInteractionTrace();
+}
+
+void ADemoCharacter::PerformInteractionTrace()
+{
+	FVector Start = FVector::ZeroVector;
+	FRotator Rotation = FRotator::ZeroRotator;
+	GetActorEyesViewPoint(Start, Rotation);
+	
+	FVector End = Start * (Rotation.Vector() * InteractionRange);
+	
+	FHitResult Hit;
+	FCollisionQueryParams CollisionParams;
+	CollisionParams.AddIgnoredActor(this);
+	
+	if (GetWorld()->LineTraceSingleByChannel(
+		Hit,
+		Start,
+		End,
+		ECC_Visibility,
+		CollisionParams))
+	{
+		if (IInteractable* Interactable = Cast<IInteractable>(Hit.GetActor()))
+		{
+			Interactable->Interact(this);
+		}
+	}
+}
+
 // Called every frame
 void ADemoCharacter::Tick(float DeltaTime)
 {
@@ -30,5 +63,12 @@ void ADemoCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+	if (UEnhancedInputComponent* EInputComponent =
+		CastChecked<UEnhancedInputComponent>(PlayerInputComponent))
+	{
+		EInputComponent->BindAction(InteractionAction, 
+			ETriggerEvent::Triggered, this,
+			&ADemoCharacter::OnInteract);
+	}
 }
 

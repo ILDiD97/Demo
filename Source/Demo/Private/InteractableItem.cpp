@@ -18,7 +18,7 @@ void AInteractableItem::Interact(AActor* Caller)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Oggetto raccolto da %s"), *Caller->GetName());
 	
-	Cast<ADemoCharacter>(Caller)->Item = this;
+	//Cast<ADemoCharacter>(Caller)->Item = this;
 }
 
 // Called when the game starts or when spawned

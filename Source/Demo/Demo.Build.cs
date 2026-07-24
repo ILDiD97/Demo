@@ -14,7 +14,13 @@ public class Demo : ModuleRules
 			"CoreUObject", 
 			"Engine", 
 			"InputCore",
-			"EnhancedInput"
+			"EnhancedInput",
+			"UMG",
+			"SlateCore",
+			"Slate",
+			"Json",
+			"JsonUtilities",
+			"HTTP"
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
