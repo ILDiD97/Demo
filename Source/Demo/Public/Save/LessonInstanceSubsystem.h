@@ -21,15 +21,6 @@ public:
 };
 
 USTRUCT(BlueprintType)
-struct FWorldTransformState
-{
-	GENERATED_BODY()
-public:
-	TArray<FObjectTransformState> ObjectState;
-	
-};
-
-USTRUCT(BlueprintType)
 struct FObjectTransformState
 {
 	GENERATED_BODY()
@@ -42,6 +33,16 @@ public:
 	float YPosition;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float ZPosition;
+	
+};
+
+USTRUCT(BlueprintType)
+struct FWorldTransformState
+{
+	GENERATED_BODY()
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<FObjectTransformState> ObjectState;
 	
 };
 /**
